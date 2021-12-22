@@ -1,0 +1,55 @@
+﻿@model Image_Crud_Application.Models.User
+
+@{
+    ViewBag.Title = "Index";
+}
+@Html.Raw(ViewBag.ErrorMessage)
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" ,Id="Email" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" ,Id = "Password" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Login" class="btn btn-default" OnClientClick="return validation()"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Not Registered yet?", "Signup")
+</div>
+
+<script>
+    function validation() {
+        var ret = true;
+        if (document.getElementById("Email").value == " ") {
+            document.getElementById("Email").innerText = "Email is required";
+            ret false;
+        }
+        else {
+            document.getElementById("Email").innerText = "";
+        }
+        return ret;
+    }
+</script>
